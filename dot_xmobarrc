@@ -1,0 +1,19 @@
+Config { font = "xft:DejaVuSans-10"
+       , bgColor = "#1c1c0e"
+       , fgColor = "#7d7d37"
+       , position = Bottom
+       , lowerOnStart = False
+       , commands = [ Run StdinReader
+		    , Run Com "newmail.rb" ["~/Mail/Inbox", "|xmobar_color.rb 'over 0,:yellow'"] "inbox" 290
+		    , Run Com "newmail.rb" ["~/Mail/feeds", "|xmobar_color.rb 'over 0,:Orange'"] "feeds" 590
+		    , Run Com "newmail.rb" ["~/Mail/spam"] "spam" 610
+		    , Run Com "cat" ["~/.jab/new", "|xmobar_color.rb 'over 0,:yellow'"] "jabs" 140
+		    , Run Com "cat" ["~/.jab/newirc", "|xmobar_color.rb 'over 0,:yellow'"] "irc" 160
+		    , Run CommandReader "xmobar_notify.rb -w 5 -c '2:#cdcd57,5:yellow,7:red' -v 4" "reminders"
+		    , Run Com "echoif" ["alarm '' ' MUTE'"] "remindmuted" 50
+		    , Run CommandReader "ledmon" "LED"
+		    ]
+       , sepChar = "'"
+       , alignSep = "}{"
+       , template = "'StdinReader'<fc=#3d3d07>│</fc>'reminders'}{<fc=#ffff00>'LED'</fc> <fc=#ffff00>'remindmuted'</fc><fc=#3d3d07>│</fc>mail:'inbox' feeds:'feeds' spam:'spam' jabs:'jabs' irc:'irc'"
+       }

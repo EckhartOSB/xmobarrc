@@ -1,0 +1,29 @@
+Config { font = "xft:DejaVuSans-10"
+       , bgColor = "#1c1c0e"
+       , fgColor = "#7d7d37"
+       , position = Top
+       , lowerOnStart = False
+       , commands = [ Run Com "mem" ["-um"] "memused" 10
+		    , Run Com "mem" ["-p","|xmobar_color.rb 'over 74,:red;between 49,75,:yellow'"] "mempct" 10
+		    , Run Com "swapstat" ["|awk '{print $4,$5}'|xmobar_color.rb 'over 0,:yellow'"] "swap" 10
+		    , Run CommandReader "pcpustat -xiqw 2 -d :|xmobar_color.rb 'over 74,:red;between 49,75,:yellow'" "pcpu"
+		    , Run Com "loadavg" ["|xmobar_color.rb 'over 3.99,:red;between 0.99,4,:yellow'"] "loadavg" 10
+		    , Run CommandReader "mbps.rb|xmobar_color.rb 'over 4.99,:red;between 0.99,5,:yellow'" "disk" 
+		    , Run Com "dcap" ["|xmobar_color.rb 'over 74,:red;between 49,75,:yellow'"] "df" 40
+		    , Run CommandReader "kbps.rb|xmobar_color.rb 'over 999,:red;between 499,1000,:yellow'" "net"
+		    , Run Com "gotinet" [] "inet" 200
+		    , Run Com "sysctl" ["-n","hw.acpi.thermal.tz0.temperature","|sed -e 's/.[0-9]C//'|xmobar_color.rb 'over 69,:red;between 59,70,:yellow'"] "temp" 310
+		    , Run Com "sysctl" ["-n","dev.cpu.0.temperature","|sed -e 's/.[0-9]C//'|xmobar_color.rb 'over 99,:red;between 69,100,:yellow'"] "temp0" 320
+		    , Run Com "sysctl" ["-n","dev.cpu.1.temperature","|sed -e 's/.[0-9]C//'|xmobar_color.rb 'over 99,:red;between 69,100,:yellow'"] "temp1" 330
+		    , Run Com "sysctl" ["-n","dev.cpu.2.temperature","|sed -e 's/.[0-9]C//'|xmobar_color.rb 'over 99,:red;between 69,100,:yellow'"] "temp2" 340
+		    , Run Com "sysctl" ["-n","dev.cpu.3.temperature","|sed -e 's/.[0-9]C//'|xmobar_color.rb 'over 99,:red;between 69,100,:yellow'"] "temp3" 350
+		    , Run Com "batt" ["|xmobar_color.rb 'under 26,:red;between 25,51,:yellow'"] "batt" 300
+		    , Run Com "weather.rb" ["98370","|xmobar_color.rb 'over 74,:red;under 46,:DodgerBlue'"] "weather" 36000
+		    , Run Date "%a %b %_d" "date" 36000
+		    , Run Date "%H:%M:%S" "time" 10
+		    , Run Com "upom" [] "moon" 72000
+		    ]
+       , sepChar = "'"
+       , alignSep = "}{"
+       , template = "mem 'memused'm 'mempct'%<fc=#3d3d07>│</fc>swap 'swap'<fc=#3d3d07>│</fc>cpu 'pcpu'%<fc=#3d3d07>│</fc>load 'loadavg'<fc=#3d3d07>│</fc>disk 'disk'm 'df'%<fc=#3d3d07>│</fc>↓'net'↑ 'inet'<fc=#3d3d07>│</fc>case:'temp'˚C cores:'temp0':'temp1':'temp2':'temp3'˚C<fc=#3d3d07>│</fc>⚡'batt'<fc=#3d3d07>│</fc>}{<fc=#3d3d07>│</fc>'weather'<fc=#3d3d07>│</fc>'date'<fc=#3d3d07>│</fc>'time'<fc=#3d3d07>│</fc>'moon'"
+       }
